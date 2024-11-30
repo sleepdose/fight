@@ -7,16 +7,16 @@ const characterImages = {
         'Женский': 'elf_female.png'
     },
     'Гном': {
-        'Мужской': 'images/dwarf_male.png',
-        'Женский': 'images/dwarf_female.png'
+        'Мужской': 'dwarf_male.png',
+        'Женский': 'dwarf_female.png'
     },
     'Человек': {
-        'Мужской': 'images/human_male.png',
-        'Женский': 'images/human_female.png'
+        'Мужской': 'human_male.png',
+        'Женский': 'human_female.png'
     },
     'Орк': {
-        'Мужской': 'images/orc_male.png',
-        'Женский': 'images/orc_female.png'
+        'Мужской': 'orc_male.png',
+        'Женский': 'orc_female.png'
     }
 };
 
