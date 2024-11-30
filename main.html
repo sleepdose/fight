@@ -108,7 +108,7 @@
         function displayCharacter() {
             document.getElementById('characterNameDisplay').textContent = character.name;
             const characterImages = {
-                'Человек': { 'Мужской': 'images/human_male.png', 'Женский': 'images/human_female.png' },
+                'Человек': { 'Мужской': 'human_male.png', 'Женский': 'human_female.png' },
             };
             document.getElementById('characterImage').src = characterImages[character.race][character.gender];
         }
