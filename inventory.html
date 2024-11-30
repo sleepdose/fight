@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инвентарь</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        nav {
+            background-color: #333;
+            width: 100%;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        button {
+            margin: 5px; /* Уменьшен размер кнопок */
+            padding: 5px 10px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Инвентарь</h2>
+        <div id="inventoryItems">Нет предметов.</div>
+        <h2>Оружие</h2>
+        <div id="weaponSlot">Нет оружия.</div>
+        <h2>Броня</h2>
+        <div id="armorSlot">Нет брони.</div>
+        <p id="equipMessage"></p>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="map.html">Карта</a></li>
+            <li><a href="main.html">Меню</a></li>
+            <li><a href="inventory.html">Инвентарь</a></li>
+        </ul>
+    </nav>
+    <script>
+        let character = JSON.parse(sessionStorage.getItem('character'));
+        let inventory = JSON.parse(sessionStorage.getItem('inventory')) || { items: [], weapons: null, armors: null };
+
+        function displayInventory() {
+            const inventoryItems = document.getElementById('inventoryItems');
+            const weaponSlot = document.getElementById('weaponSlot');
+            const armorSlot = document.getElementById('armorSlot');
+
+            inventoryItems.innerHTML = inventory.items.length > 0 ?
+                inventory.items.map((item, index) => `
+                    <div>
+                        ${item.name}
+                        <button class="equipButton" data-index="${index}" data-type="${item.type}">Экипировать</button>
+                    </div>`).join('') : "Нет предметов.";
+
+            weaponSlot.innerHTML = inventory.weapons ?
+                `${inventory.weapons.name} <button class="unequipButton" data-type="weapon">Снять</button>` : "Нет оружия.";
+            armorSlot.innerHTML = inventory.armors ?
+                `${inventory.armors.name} <button class="unequipButton" data-type="armor">Снять</button>` : "Нет брони.";
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('equipButton')) {
+                const index = e.target.dataset.index;
+                const type = e.target.dataset.type;
+                const item = inventory.items.splice(index, 1)[0]; // Удаляем предмет из общего инвентаря
+
+                if ((type === 'weapon' && !inventory.weapons) || (type === 'armor' && !inventory.armors)) {
+                    if (type === 'weapon') {
+                        inventory.weapons = item; // Перемещаем в оружие
+                        character.strength += item.strength; // Добавляем силу
+                    } else if (type === 'armor') {
+                        inventory.armors = item; // Перемещаем в броню
+                        character.health += item.health; // Добавляем здоровье
+                    }
+                    sessionStorage.setItem('inventory', JSON.stringify(inventory));
+                    sessionStorage.setItem('character', JSON.stringify(character));
+                    displayInventory(); // Обновляем инвентарь
+                } else {
+                    inventory.items.push(item); // Вернем предмет обратно в инвентарь
+                }
+            }
+
+            if (e.target.classList.contains('unequipButton')) {
+                const type = e.target.dataset.type;
+                if (type === 'weapon') {
+                    character.strength -= inventory.weapons.strength; // Убираем силу
+                    inventory.items.push(inventory.weapons); // Возвращаем обратно в инвентарь
+                    inventory.weapons = null; // Снимаем экипировку
+                } else if (type === 'armor') {
+                    character.health -= inventory.armors.health; // Убираем здоровье
+                    inventory.items.push(inventory.armors); // Возвращаем обратно в инвентарь
+                    inventory.armors = null; // Снимаем экипировку
+                }
+                sessionStorage.setItem('inventory', JSON.stringify(inventory));
+                sessionStorage.setItem('character', JSON.stringify(character));
+                displayInventory(); // Обновляем инвентарь
+            }
+        });
+
+        displayInventory();
+    </script>
+</body>
+</html>

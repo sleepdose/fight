@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial;
+            background-color: #1a1a1a; /* Темный фон */
+            color: #e0e0e0; /* Светлый текст */
+            min-height: 100vh; /* Минимальная высота страницы */
+            margin: 0; /* Убираем отступ по умолчанию */
+        }
+        .container {
+            flex: 1; /* Позволяет контейнеру занимать все доступное пространство */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        nav {
+            background-color: #333; /* Темный фон для меню */
+            width: 100%;
+            padding: 10px 0;
+            position: fixed; /* Закрепляем меню внизу */
+            bottom: 0; /* Расположение внизу */
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="map.html">Карта</a></li>
+            <li><a href="main.html">Меню</a></li>
+            <li><a href="inventory.html">Инвентарь</a></li>
+            <!-- Вы можете добавить другие ссылки при необходимости -->
+        </ul>
+    </nav>
+
+</body>
+</html>
