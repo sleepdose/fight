@@ -3,8 +3,8 @@ const genders = ['Мужской', 'Женский'];
 
 const characterImages = {
     'Эльф': {
-        'Мужской': 'images/elf_male.png',
-        'Женский': 'images/elf_female.png'
+        'Мужской': 'elf_male.png',
+        'Женский': 'elf_female.png'
     },
     'Гном': {
         'Мужской': 'images/dwarf_male.png',
